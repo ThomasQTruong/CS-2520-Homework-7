@@ -5,7 +5,7 @@ and collision, target creation, etc.
 """
 
 import pygame as pg
-from cannon import Cannon
+from tank import Tank
 from random import randint
 from scoretable import ScoreTable
 from movingtargets import MovingTargets
@@ -18,7 +18,7 @@ class Manager:
   """
   def __init__(self, n_targets=1):
     self.balls = []
-    self.gun = Cannon()
+    self.gun = Tank()
     self.targets = []
     self.score_t = ScoreTable()
     self.n_targets = n_targets

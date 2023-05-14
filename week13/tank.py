@@ -1,17 +1,18 @@
-"""The cannon game.
+"""The tank.
 
 Manages it's renderring, movement and striking.
 """
 
+import math
 import numpy as np
 import pygame as pg
 import game_data as GameData
 from gameobject import GameObject
 from color import Color
 
-class Cannon(GameObject):
+class Tank(GameObject):
   """
-  Cannon class. Manages it's renderring, movement and striking.
+  Tank class. Manages it's renderring, movement and striking.
   """
   def __init__(self, coord=None, angle=0,
                max_pow=50, min_pow=10, color=Color.RED):
@@ -30,6 +31,9 @@ class Cannon(GameObject):
     self.pow = min_pow
     # Projectile values.
     self.projectile_option = 0
+    # Tank values.
+    self.tank_image = pg.image.load("assets/Tank.png")
+    self.tank_image = pg.transform.scale(self.tank_image, (60, 30))
 
   def activate(self):
     """
@@ -46,15 +50,15 @@ class Cannon(GameObject):
 
   def strike(self):
     """
-    Creates ball, according to gun's direction and current charge power.
+    Creates projectile, according to gun's direction and current charge power.
     """
     vel = self.pow
     angle = self.angle
-    ball = GameData.PROJECTILES[self.projectile_option](list(self.coord),
+    projectile = GameData.PROJECTILES[self.projectile_option](list(self.coord),
                     [int(vel * np.cos(angle)), int(vel * np.sin(angle))])
     self.pow = self.min_pow
     self.active = False
-    return ball
+    return projectile
 
   def set_angle(self, target_pos):
     """
@@ -65,7 +69,7 @@ class Cannon(GameObject):
 
   def change_projectile(self, back):
     """
-    Changes the projectile the cannon uses.
+    Changes the projectile the tank uses.
     """
     # Change to NEXT projectile.
     if not back:
@@ -75,7 +79,7 @@ class Cannon(GameObject):
     else:
       self.projectile_option = ((self.projectile_option - 1)
                                 % len(GameData.PROJECTILES))
-    # Change cannon color.
+    # Change tank color.
     self.color = GameData.PROJECTILE_COLORS[self.projectile_option]
 
   def move_x(self, inc):
@@ -98,14 +102,14 @@ class Cannon(GameObject):
     """
     Draws the gun on the screen.
     """
-    gun_shape = []
-    vec_1 = np.array([int(5 * np.cos(self.angle - np.pi / 2)),
-                      int(5 * np.sin(self.angle - np.pi / 2))])
-    vec_2 = np.array([int(self.pow * np.cos(self.angle)),
-                      int(self.pow * np.sin(self.angle))])
-    gun_pos = np.array(self.coord)
-    gun_shape.append((gun_pos + vec_1).tolist())
-    gun_shape.append((gun_pos + vec_1 + vec_2).tolist())
-    gun_shape.append((gun_pos + vec_2 - vec_1).tolist())
-    gun_shape.append((gun_pos - vec_1).tolist())
-    pg.draw.polygon(screen, self.color, gun_shape)
+    # Credit to: https://gamedev.stackexchange.com/questions/132163/
+    # how-can-i-make-the-player-look-to-the-mouse-direction-pygame-2d
+    mx, my = pg.mouse.get_pos()
+    dx, dy = mx - self.coord[0], self.coord[1] - my
+    new_angle = math.degrees(math.atan2(dy, dx)) - self.angle
+    # Rotate tank by calculated angle.
+    new_tank_image = pg.transform.rotate(self.tank_image, new_angle)
+    # Get the rectangle of the rotated tank.
+    new_tank_rectangle = new_tank_image.get_rect(center=self.coord)
+    # Draw tank.
+    screen.blit(new_tank_image, new_tank_rectangle)
