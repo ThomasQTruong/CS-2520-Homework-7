@@ -1,9 +1,9 @@
 """The tank shooting game: The gun of Khiryanov."""
 
 import pygame as pg
-import manager as Manager
-import game_data as GameData
-from color import Color
+import src.manager as Manager
+import src.game_data as GameData
+from src.color import Color
 
 if __name__ == "__main__":
   # Initialize game engine.

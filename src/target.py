@@ -4,10 +4,10 @@ Creates target, manages it's rendering and collision with a ball event.
 """
 
 import pygame as pg
-import game_data as GameData
+import src.game_data as GameData
 from random import randint
-from gameobject import GameObject
-from color import Color
+from src.game_object import GameObject
+from src.color import Color
 
 class Target(GameObject):
   """

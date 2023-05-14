@@ -6,9 +6,9 @@ Manages it's renderring, movement and striking.
 import math
 import numpy as np
 import pygame as pg
-import game_data as GameData
-from gameobject import GameObject
-from color import Color
+import src.game_data as GameData
+from src.game_object import GameObject
+from src.color import Color
 
 class Tank(GameObject):
   """

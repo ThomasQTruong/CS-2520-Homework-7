@@ -1,21 +1,21 @@
-"""Shootable targets that move around in the map.
+"""Just like movingtargets, but moves 4x faster and is triangular!
 
 Gives movement to the stationary targets.
 """
 
-import game_data as GameData
+import src.game_data as GameData
 from random import randint
-from target import Target
+from src.target import Target
 
-class MovingTargets(Target):
-  """ Shootable targets that move around in the map.
+class FastTriangleTargets(Target):
+  """Just like movingtargets, but moves 4x faster and is triangular!
   
   Gives movement to the stationary targets.
   """
   def __init__(self, coord=None, color=None, rad=30):
     super().__init__(coord, color, rad)
-    self.vx = randint(-2, +2)
-    self.vy = randint(-2, +2)
+    self.vx = randint(-8, +8)
+    self.vy = randint(-8, +8)
 
   def move(self):
     # Out of bounds, move opposite x direction.

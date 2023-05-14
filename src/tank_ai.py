@@ -1,6 +1,6 @@
 """A tank bot that attacks the user."""
 
-from gameobject import GameObject
+from src.game_object import GameObject
 
 class TankAI(GameObject):
   """A tank bot that attacks the user."""

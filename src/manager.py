@@ -5,11 +5,12 @@ and collision, target creation, etc.
 """
 
 import pygame as pg
-from tank import Tank
+from src.tank import Tank
 from random import randint
-from scoretable import ScoreTable
-from movingtargets import MovingTargets
-from target import Target
+from src.score_table import ScoreTable
+from src.moving_targets import MovingTargets
+from src.fast_circle_targets import FastMovingTargets
+from src.target import Target
 
 class Manager:
   """
@@ -36,6 +37,7 @@ class Manager:
     # Create targets.
     for _ in range(self.n_targets):
       self.targets.append(MovingTargets(rad = randint(rand_start, rand_stop)))
+      self.targets.append(FastMovingTargets(rad = randint(rand_start, rand_stop)))
       self.targets.append(Target(rad=randint(rand_start, rand_stop)))
 
   def process(self, events, screen):
