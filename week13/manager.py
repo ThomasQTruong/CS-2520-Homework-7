@@ -28,13 +28,15 @@ class Manager:
     """
     Adds new targets.
     """
+
+    # Random sizes based on score.
+    rand_start = max(1, 30 - 2 * max(0, self.score_t.score()))
+    rand_stop = max(1, 30 - max(0, self.score_t.score()))
+
+    # Create targets.
     for _ in range(self.n_targets):
-      self.targets.append(MovingTargets(rad = randint(
-                          max(1, 30 - 2 * max(0, self.score_t.score())),
-                          30 - max(0, self.score_t.score()))))
-      self.targets.append(Target(rad=randint(max(1, 30 - 2 * max(0,
-                          self.score_t.score())), 30 - max(0,
-                          self.score_t.score()))))
+      self.targets.append(MovingTargets(rad = randint(rand_start, rand_stop)))
+      self.targets.append(Target(rad=randint(rand_start, rand_stop)))
 
   def process(self, events, screen):
     """

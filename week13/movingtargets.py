@@ -3,6 +3,7 @@
 Gives movement to the stationary targets.
 """
 
+import cannon as Cannon
 from random import randint
 from target import Target
 
@@ -17,5 +18,12 @@ class MovingTargets(Target):
     self.vy = randint(-2, +2)
 
   def move(self):
+    # Out of bounds, move opposite x direction.
+    if (self.coord[0] < 0) or (self.coord[0] > Cannon.SCREEN_SIZE[0]):
+      self.vx *= -1
     self.coord[0] += self.vx
+
+    # Out of bounds, move opposite y direction.
+    if (self.coord[1] < 0) or (self.coord[1] > Cannon.SCREEN_SIZE[1]):
+      self.vy *= -1
     self.coord[1] += self.vy

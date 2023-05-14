@@ -67,16 +67,16 @@ class Cannon(GameObject):
     """
     Changes horizonal position of the gun.
     """
-    if (self.coord[0] > 30 or inc > 0) and (self.coord[0] < SCREEN_SIZE[0]
-                                                              - 30 or inc < 0):
+    if (self.coord[0] > 30 or inc > 0) and (self.coord[0]
+                        < SCREEN_SIZE[0] - 30 or inc < 0):
       self.coord[0] += inc
 
   def moveY(self, inc):
     """
     Changes vertical position of the gun.
     """
-    if (self.coord[1] > 30 or inc > 0) and (self.coord[1] < SCREEN_SIZE[1]
-                                                              - 30 or inc < 0):
+    if (self.coord[1] > 30 or inc > 0) and (self.coord[1]
+                        < SCREEN_SIZE[1] - 30 or inc < 0):
       self.coord[1] += inc
 
   def draw(self, screen):
