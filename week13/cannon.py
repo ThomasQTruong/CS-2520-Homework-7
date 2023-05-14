@@ -29,6 +29,7 @@ class Cannon(GameObject):
     self.color = color
     self.active = False
     self.pow = min_pow
+    self.ammo = 0
 
   def activate(self):
     """
@@ -62,7 +63,15 @@ class Cannon(GameObject):
     self.angle = np.arctan2(target_pos[1] - self.coord[1],
                             target_pos[0] - self.coord[0])
 
-  def move(self, inc):
+  def moveX(self, inc):
+    """
+    Changes horizonal position of the gun.
+    """
+    if (self.coord[0] > 30 or inc > 0) and (self.coord[0] < SCREEN_SIZE[0]
+                                                              - 30 or inc < 0):
+      self.coord[0] += inc
+
+  def moveY(self, inc):
     """
     Changes vertical position of the gun.
     """
@@ -109,5 +118,3 @@ if __name__ == "__main__":
     pg.display.flip()
 
   pg.quit()
-
-
