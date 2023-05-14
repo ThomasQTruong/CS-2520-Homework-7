@@ -5,15 +5,12 @@ Manages it's renderring, movement and striking.
 
 import numpy as np
 import pygame as pg
-import manager as Manager
 from ball_projectile import BallProjectile
 from square_projectile import SquareProjectile
 from triangle_projectile import TriangleProjectile
 from gameobject import GameObject
 from color import Color
-
-SCREEN_SIZE = (800, 600)
-FRAME_RATE = 20
+from game_data import GameData
 
 class Cannon(GameObject):
   """
@@ -27,7 +24,7 @@ class Cannon(GameObject):
     """
     self.coord = coord
     if self.coord is None:  # No coord was passed, set default.
-      self.coord = [30, SCREEN_SIZE[1]//2]
+      self.coord = [30, GameData.SCREEN_SIZE[1]//2]
     self.angle = angle
     self.max_pow = max_pow
     self.min_pow = min_pow
@@ -96,7 +93,7 @@ class Cannon(GameObject):
     Changes horizonal position of the gun.
     """
     if (self.coord[0] > 30 or inc > 0) and (self.coord[0]
-                        < SCREEN_SIZE[0] - 30 or inc < 0):
+                        < GameData.SCREEN_SIZE[0] - 30 or inc < 0):
       self.coord[0] += inc
 
   def move_y(self, inc):
@@ -104,7 +101,7 @@ class Cannon(GameObject):
     Changes vertical position of the gun.
     """
     if (self.coord[1] > 30 or inc > 0) and (self.coord[1]
-                        < SCREEN_SIZE[1] - 30 or inc < 0):
+                        < GameData.SCREEN_SIZE[1] - 30 or inc < 0):
       self.coord[1] += inc
 
   def draw(self, screen):
@@ -122,27 +119,3 @@ class Cannon(GameObject):
     gun_shape.append((gun_pos + vec_2 - vec_1).tolist())
     gun_shape.append((gun_pos - vec_1).tolist())
     pg.draw.polygon(screen, self.color, gun_shape)
-
-
-if __name__ == "__main__":
-  # Initialize game engine.
-  pg.init()
-  pg.font.init()
-
-  screen = pg.display.set_mode(SCREEN_SIZE)
-  pg.display.set_caption("The gun of Khiryanov")
-
-  done = False
-  clock = pg.time.Clock()
-
-  mgr = Manager.Manager(n_targets=3)
-
-  while not done:
-    clock.tick(FRAME_RATE)
-    screen.fill(Color.BLACK)
-
-    done = mgr.process(pg.event.get(), screen)
-
-    pg.display.flip()
-
-  pg.quit()

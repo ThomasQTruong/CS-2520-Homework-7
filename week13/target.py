@@ -4,7 +4,7 @@ Creates target, manages it's rendering and collision with a ball event.
 """
 
 import pygame as pg
-import cannon as Cannon
+from game_data import GameData
 from random import randint
 from gameobject import GameObject
 from color import Color
@@ -20,8 +20,8 @@ class Target(GameObject):
     color and radius of the target.
     """
     if coord is None:
-      coord = [randint(rad, Cannon.SCREEN_SIZE[0] - rad),
-                randint(rad, Cannon.SCREEN_SIZE[1] - rad)]
+      coord = [randint(rad, GameData.SCREEN_SIZE[0] - rad),
+                randint(rad, GameData.SCREEN_SIZE[1] - rad)]
     self.coord = coord
     self.rad = rad
 
