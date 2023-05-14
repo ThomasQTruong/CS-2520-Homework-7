@@ -8,6 +8,7 @@ import pygame as pg
 import manager as Manager
 from ball_projectile import BallProjectile
 from square_projectile import SquareProjectile
+from triangle_projectile import TriangleProjectile
 from gameobject import GameObject
 from color import Color
 
@@ -32,7 +33,7 @@ class Cannon(GameObject):
     self.pow = min_pow
 
     # Projectile values.
-    self.projectiles = [BallProjectile, SquareProjectile]
+    self.projectiles = [BallProjectile, SquareProjectile, TriangleProjectile]
     self.projectile_colors = [Color.RED, Color.GREEN, Color.BLUE]
     self.projectile = self.projectiles[0]
     self.projectile_option = 0
@@ -76,10 +77,12 @@ class Cannon(GameObject):
 
     # Change to NEXT projectile.
     if not back:
-      self.projectile_option = (self.projectile_option + 1) % len(self.projectiles)
+      self.projectile_option = ((self.projectile_option + 1)
+                                % len(self.projectiles))
     # Change to PREVIOUS projectile.
     else:
-      self.projectile_option = (self.projectile_option - 1) % len(self.projectiles)
+      self.projectile_option = ((self.projectile_option - 1)
+                                % len(self.projectiles))
 
     # Set projectile.
     self.projectile = self.projectiles[self.projectile_option]
