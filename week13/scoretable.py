@@ -23,11 +23,11 @@ class ScoreTable:
 
   def draw(self, screen):
     score_surf = []
-    score_surf.append(self.font.render("Destroyed: {}".format(self.t_destr),
-                                                          True, Color.WHITE))
-    score_surf.append(self.font.render("Balls used: {}".format(self.b_used),
-                                                          True, Color.WHITE))
-    score_surf.append(self.font.render("Total: {}".format(self.score()),
-                                                       True, Color.RED))
+    score_surf.append(self.font.render(f"Destroyed: {self.t_destr}",
+                                       True, Color.WHITE))
+    score_surf.append(self.font.render(f"Shots Fired: {self.b_used}",
+                                       True, Color.WHITE))
+    score_surf.append(self.font.render(f"Total: {self.score()}",
+                                       True, Color.RED))
     for i in range(3):
       screen.blit(score_surf[i], [10, 10 + 30 * i])
