@@ -66,6 +66,11 @@ class Manager:
     for event in events:
       if event.type == pg.QUIT:
         done = True
+      elif event.type == pg.KEYDOWN:
+        if event.key == pg.K_e:
+          self.gun.change_projectile(False)
+        elif event.key == pg.K_q:
+          self.gun.change_projectile(True)
       elif event.type == pg.MOUSEBUTTONDOWN:
         if event.button == 1:
           self.gun.activate()
@@ -77,13 +82,13 @@ class Manager:
     # If movement keys are held.
     keys = pg.key.get_pressed()
     if keys[pg.K_LEFT] or keys[pg.K_a]:
-      self.gun.moveX(-5)
+      self.gun.move_x(-5)
     if keys[pg.K_RIGHT] or keys[pg.K_d]:
-      self.gun.moveX(5)
+      self.gun.move_x(5)
     if keys[pg.K_UP] or keys[pg.K_w]:
-      self.gun.moveY(-5)
+      self.gun.move_y(-5)
     if keys[pg.K_DOWN] or keys[pg.K_s]:
-      self.gun.moveY(5)
+      self.gun.move_y(5)
 
     return done
 

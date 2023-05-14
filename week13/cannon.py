@@ -5,8 +5,9 @@ Manages it's renderring, movement and striking.
 
 import numpy as np
 import pygame as pg
-import shell as Shell
 import manager as Manager
+from ball_projectile import BallProjectile
+from square_projectile import SquareProjectile
 from gameobject import GameObject
 from color import Color
 
@@ -29,7 +30,12 @@ class Cannon(GameObject):
     self.color = color
     self.active = False
     self.pow = min_pow
-    self.ammo = 0
+
+    # Projectile values.
+    self.projectiles = [BallProjectile, SquareProjectile]
+    self.projectile_colors = [Color.RED, Color.GREEN, Color.BLUE]
+    self.projectile = self.projectiles[0]
+    self.projectile_option = 0
 
   def activate(self):
     """
@@ -50,7 +56,7 @@ class Cannon(GameObject):
     """
     vel = self.pow
     angle = self.angle
-    ball = Shell.Shell(list(self.coord), [int(vel * np.cos(angle)),
+    ball = self.projectile(list(self.coord), [int(vel * np.cos(angle)),
                                     int(vel * np.sin(angle))])
     self.pow = self.min_pow
     self.active = False
@@ -63,7 +69,23 @@ class Cannon(GameObject):
     self.angle = np.arctan2(target_pos[1] - self.coord[1],
                             target_pos[0] - self.coord[0])
 
-  def moveX(self, inc):
+  def change_projectile(self, back):
+    """
+    Changes the projectile the cannon uses.
+    """
+
+    # Change to NEXT projectile.
+    if not back:
+      self.projectile_option = (self.projectile_option + 1) % len(self.projectiles)
+    # Change to PREVIOUS projectile.
+    else:
+      self.projectile_option = (self.projectile_option - 1) % len(self.projectiles)
+
+    # Set projectile.
+    self.projectile = self.projectiles[self.projectile_option]
+    self.color = self.projectile_colors[self.projectile_option]
+
+  def move_x(self, inc):
     """
     Changes horizonal position of the gun.
     """
@@ -71,7 +93,7 @@ class Cannon(GameObject):
                         < SCREEN_SIZE[0] - 30 or inc < 0):
       self.coord[0] += inc
 
-  def moveY(self, inc):
+  def move_y(self, inc):
     """
     Changes vertical position of the gun.
     """
