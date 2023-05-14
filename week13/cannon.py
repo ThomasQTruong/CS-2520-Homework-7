@@ -13,18 +13,21 @@ from gameobject import GameObject
 from color import Color
 
 SCREEN_SIZE = (800, 600)
+FRAME_RATE = 20
 
 class Cannon(GameObject):
   """
   Cannon class. Manages it's renderring, movement and striking.
   """
-  def __init__(self, coord=[30, SCREEN_SIZE[1]//2], angle=0,
+  def __init__(self, coord=None, angle=0,
                max_pow=50, min_pow=10, color=Color.RED):
     """
     Constructor method. Sets coordinate, direction,
     minimum and maximum power and color of the gun.
     """
     self.coord = coord
+    if self.coord is None:  # No coord was passed, set default.
+      self.coord = [30, SCREEN_SIZE[1]//2]
     self.angle = angle
     self.max_pow = max_pow
     self.min_pow = min_pow
@@ -135,7 +138,7 @@ if __name__ == "__main__":
   mgr = Manager.Manager(n_targets=3)
 
   while not done:
-    clock.tick(15)
+    clock.tick(FRAME_RATE)
     screen.fill(Color.BLACK)
 
     done = mgr.process(pg.event.get(), screen)
