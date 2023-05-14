@@ -1,3 +1,5 @@
+"""The tank shooting game: The gun of Khiryanov."""
+
 import pygame as pg
 import manager as Manager
 from game_data import GameData
