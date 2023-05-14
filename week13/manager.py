@@ -1,4 +1,8 @@
-""" manager.py """
+"""Manages the many aspects of the game.
+
+Manages events' handling, ball's motion
+and collision, target creation, etc.
+"""
 
 import pygame as pg
 import cannon as Cannon

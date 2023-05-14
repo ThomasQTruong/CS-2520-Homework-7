@@ -1,4 +1,7 @@
-""" cannon.py """
+"""The cannon game.
+
+Manages it's renderring, movement and striking.
+"""
 
 import numpy as np
 import pygame as pg
@@ -63,7 +66,7 @@ class Cannon(GameObject):
     """
     Changes vertical position of the gun.
     """
-    if (self.coord[1] > 30 or inc > 0) and (self.coord[1] < self.SCREEN_SIZE[1]
+    if (self.coord[1] > 30 or inc > 0) and (self.coord[1] < SCREEN_SIZE[1]
                                                               - 30 or inc < 0):
       self.coord[1] += inc
 

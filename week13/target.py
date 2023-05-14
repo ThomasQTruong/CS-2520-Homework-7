@@ -1,4 +1,7 @@
-""" target.py """
+"""Shootable targets that are stationary.
+
+Creates target, manages it's rendering and collision with a ball event.
+"""
 
 import pygame as pg
 import cannon as Cannon
