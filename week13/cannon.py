@@ -5,12 +5,9 @@ Manages it's renderring, movement and striking.
 
 import numpy as np
 import pygame as pg
-from ball_projectile import BallProjectile
-from square_projectile import SquareProjectile
-from triangle_projectile import TriangleProjectile
+import game_data as GameData
 from gameobject import GameObject
 from color import Color
-from game_data import GameData
 
 class Cannon(GameObject):
   """
@@ -31,11 +28,7 @@ class Cannon(GameObject):
     self.color = color
     self.active = False
     self.pow = min_pow
-
     # Projectile values.
-    self.projectiles = [BallProjectile, SquareProjectile, TriangleProjectile]
-    self.projectile_colors = [Color.RED, Color.GREEN, Color.BLUE]
-    self.projectile = self.projectiles[0]
     self.projectile_option = 0
 
   def activate(self):
@@ -57,8 +50,8 @@ class Cannon(GameObject):
     """
     vel = self.pow
     angle = self.angle
-    ball = self.projectile(list(self.coord), [int(vel * np.cos(angle)),
-                                    int(vel * np.sin(angle))])
+    ball = GameData.PROJECTILES[self.projectile_option](list(self.coord),
+                    [int(vel * np.cos(angle)), int(vel * np.sin(angle))])
     self.pow = self.min_pow
     self.active = False
     return ball
@@ -74,19 +67,16 @@ class Cannon(GameObject):
     """
     Changes the projectile the cannon uses.
     """
-
     # Change to NEXT projectile.
     if not back:
       self.projectile_option = ((self.projectile_option + 1)
-                                % len(self.projectiles))
+                                % len(GameData.PROJECTILES))
     # Change to PREVIOUS projectile.
     else:
       self.projectile_option = ((self.projectile_option - 1)
-                                % len(self.projectiles))
-
-    # Set projectile.
-    self.projectile = self.projectiles[self.projectile_option]
-    self.color = self.projectile_colors[self.projectile_option]
+                                % len(GameData.PROJECTILES))
+    # Change cannon color.
+    self.color = GameData.PROJECTILE_COLORS[self.projectile_option]
 
   def move_x(self, inc):
     """

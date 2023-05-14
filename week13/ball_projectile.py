@@ -5,7 +5,7 @@ movement and implement it's rendering.
 """
 
 import pygame as pg
-from game_data import GameData
+import game_data as GameData
 from gameobject import GameObject
 from color import Color
 

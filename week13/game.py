@@ -2,7 +2,7 @@
 
 import pygame as pg
 import manager as Manager
-from game_data import GameData
+import game_data as GameData
 from color import Color
 
 if __name__ == "__main__":

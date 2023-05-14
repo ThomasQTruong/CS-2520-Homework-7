@@ -3,7 +3,7 @@
 Gives movement to the stationary targets.
 """
 
-from game_data import GameData
+import game_data as GameData
 from random import randint
 from target import Target
 
