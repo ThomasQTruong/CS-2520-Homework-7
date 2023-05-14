@@ -5,9 +5,9 @@ it's movement and implement it's rendering.
 """
 
 import pygame as pg
-import src.game_data as GameData
-from src.game_object import GameObject
-from src.color import Color
+import game_data as GameData
+from game_object import GameObject
+from color import Color
 
 class SquareProjectile(GameObject):
   """

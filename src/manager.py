@@ -5,12 +5,14 @@ and collision, target creation, etc.
 """
 
 import pygame as pg
-from src.tank import Tank
 from random import randint
-from src.score_table import ScoreTable
-from src.moving_targets import MovingTargets
-from src.fast_circle_targets import FastMovingTargets
-from src.target import Target
+from tank import Tank
+from score_table import ScoreTable
+from moving_targets import MovingTargets
+from fast_circle_targets import FastCircleTargets
+from fast_square_targets import FastSquareTargets
+from fast_triangle_targets import FastTriangleTargets
+from target import Target
 
 class Manager:
   """
@@ -19,7 +21,7 @@ class Manager:
   """
   def __init__(self, n_targets=1):
     self.balls = []
-    self.gun = Tank()
+    self.tank = Tank()
     self.targets = []
     self.score_t = ScoreTable()
     self.n_targets = n_targets
@@ -36,9 +38,16 @@ class Manager:
 
     # Create targets.
     for _ in range(self.n_targets):
-      self.targets.append(MovingTargets(rad = randint(rand_start, rand_stop)))
-      self.targets.append(FastMovingTargets(rad = randint(rand_start, rand_stop)))
-      self.targets.append(Target(rad=randint(rand_start, rand_stop)))
+      self.targets.append(MovingTargets(rad =
+                                        randint(rand_start, rand_stop)))
+      self.targets.append(FastCircleTargets(rad =
+                                            randint(rand_start, rand_stop)))
+      self.targets.append(FastSquareTargets(rad =
+                                            randint(rand_start, rand_stop)))
+      self.targets.append(FastTriangleTargets(rad =
+                                              randint(rand_start, rand_stop)))
+      self.targets.append(Target(rad =
+                                 randint(rand_start, rand_stop)))
 
   def process(self, events, screen):
     """
@@ -49,7 +58,7 @@ class Manager:
 
     if pg.mouse.get_focused():
       mouse_pos = pg.mouse.get_pos()
-      self.gun.set_angle(mouse_pos)
+      self.tank.set_angle(mouse_pos)
 
     self.move()
     self.collide()
@@ -70,44 +79,44 @@ class Manager:
         done = True
       elif event.type == pg.KEYDOWN:
         if event.key == pg.K_e:
-          self.gun.change_projectile(False)
+          self.tank.change_projectile(False)
         elif event.key == pg.K_q:
-          self.gun.change_projectile(True)
+          self.tank.change_projectile(True)
       elif event.type == pg.MOUSEBUTTONDOWN:
         if event.button == 1:
-          self.gun.activate()
+          self.tank.activate()
       elif event.type == pg.MOUSEBUTTONUP:
         if event.button == 1:
-          self.balls.append(self.gun.strike())
+          self.balls.append(self.tank.strike())
           self.score_t.b_used += 1
 
     # If movement keys are held.
     keys = pg.key.get_pressed()
     if keys[pg.K_LEFT] or keys[pg.K_a]:
-      self.gun.move_x(-5)
+      self.tank.move_x(-5)
     if keys[pg.K_RIGHT] or keys[pg.K_d]:
-      self.gun.move_x(5)
+      self.tank.move_x(5)
     if keys[pg.K_UP] or keys[pg.K_w]:
-      self.gun.move_y(-5)
+      self.tank.move_y(-5)
     if keys[pg.K_DOWN] or keys[pg.K_s]:
-      self.gun.move_y(5)
+      self.tank.move_y(5)
 
     return done
 
   def draw(self, screen):
     """
-    Runs balls', gun's, targets' and score table's drawing method.
+    Runs balls', tank's, targets' and score table's drawing method.
     """
     for ball in self.balls:
       ball.draw(screen)
     for target in self.targets:
       target.draw(screen)
-    self.gun.draw(screen)
+    self.tank.draw(screen)
     self.score_t.draw(screen)
 
   def move(self):
     """
-    Runs balls' and gun's movement method, removes dead balls.
+    Runs balls' and tank's movement method, removes dead balls.
     """
     dead_balls = []
     for i, ball in enumerate(self.balls):
@@ -118,7 +127,7 @@ class Manager:
       self.balls.pop(i)
     for i, target in enumerate(self.targets):
       target.move()
-    self.gun.gain()
+    self.tank.gain()
 
   def collide(self):
     """

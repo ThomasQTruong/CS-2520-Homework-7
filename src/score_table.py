@@ -4,7 +4,7 @@ Calculate and displays scores.
 """
 
 import pygame as pg
-from src.color import Color
+from color import Color
 
 class ScoreTable:
   """

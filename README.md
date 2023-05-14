@@ -5,7 +5,10 @@
 1. ✅ Implement various types of projectiles.
     - Square projectile.
     - Triangle projectile.
-2. ⬜️ Develop several target types with different movement patterns.
+2. ✅ Develop several target types with different movement patterns.
+    - Fast Circle Targets.
+    - Fast Triangle Targets.
+    - Fast Square Targets.
 3. ✅ Transform the cannon into a moving tank.
 4. ⬜️ Create "bombs" that will be dropped by targets onto the cannon.
 5. ⬜️ Implement multiple cannons that can shoot at each other.

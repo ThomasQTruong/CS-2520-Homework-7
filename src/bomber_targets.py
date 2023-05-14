@@ -3,8 +3,8 @@
 Gives movement to the stationary targets.
 """
 
-import src.game_data as GameData
-from src.target import Target
+import game_data as GameData
+from target import Target
 
 class MovingTargets(Target):
   """ Shootable targets that move around in the map.

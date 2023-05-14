@@ -1,4 +1,4 @@
-"""Just like movingtargets, but moves 4x faster and is triangular!
+"""Just like movingtargets, but moves 4x faster and is a square!
 
 Gives movement to the stationary targets.
 """
@@ -8,8 +8,8 @@ import game_data as GameData
 from random import randint
 from target import Target
 
-class FastTriangleTargets(Target):
-  """Just like movingtargets, but moves 4x faster and is triangular!
+class FastSquareTargets(Target):
+  """Just like movingtargets, but moves 4x faster and is a square!
   
   Gives movement to the stationary targets.
   """
@@ -19,14 +19,13 @@ class FastTriangleTargets(Target):
     self.vy = randint(-8, +8)
 
   def draw(self, screen):
-    """Draws the triangle."""
-    pg.draw.polygon(screen, self.color,
-                    # Left point.
-                    ((self.coord[0] - self.rad / 2, self.coord[1]),
-                    # Height.
-                    (self.coord[0], self.coord[1] - self.rad),
-                    # Right point.
-                    (self.coord[0] + self.rad / 2, self.coord[1])))
+    """Draw square."""
+    # Create square.
+    square = pg.Rect(self.rad, self.rad, self.rad, self.rad)
+    # Set coordinate.
+    square.center = self.coord
+    # Draw square.
+    pg.draw.rect(screen, self.color, square)
 
   def move(self):
     # Out of bounds, move opposite x direction.
