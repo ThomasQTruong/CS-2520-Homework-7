@@ -1,7 +1,12 @@
-from target import Target
-from random import randint
+"""A tank bot that attacks the user."""
 
-class TankAI(Target):
-  def __init__(self, coord=None, color=None, rad=30):
-    super().__init__(coord, color, rad)
-    self.vy = randint(-2, +2)
+from gameobject import GameObject
+
+class TankAI(GameObject):
+  """A tank bot that attacks the user."""
+  def __init__(self):
+    pass
+  def move(self):
+    pass
+  def draw(self, screen):
+    pass
