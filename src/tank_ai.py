@@ -1,7 +1,6 @@
 """A tank bot that attacks the user."""
 
 import math
-import manager as Manager
 import game_data as GameData
 import pygame as pg
 from random import randint
@@ -15,11 +14,22 @@ class TankAI(Target):
                            - randint(30, GameData.SCREEN_SIZE[1] - 30)]
     self.angle = 0
     # Tank image.
-    self.tank_image = pg.image.load("../assets/Tank.png")
+    self.tank_image = pg.image.load("../assets/TankAI.png")
     self.tank_image = pg.transform.scale(self.tank_image, (rad * 2, rad))
+    # Tank speed and direction.
+    self.vx = randint(-4, +4)
+    self.vy = randint(-4, +4)
 
   def move(self):
-    pass
+    # Out of bounds, move opposite x direction.
+    if (self.coord[0] < 0) or (self.coord[0] > GameData.SCREEN_SIZE[0]):
+      self.vx *= -1
+    self.coord[0] += self.vx
+
+    # Out of bounds, move opposite y direction.
+    if (self.coord[1] < 0) or (self.coord[1] > GameData.SCREEN_SIZE[1]):
+      self.vy *= -1
+    self.coord[1] += self.vy
 
   def draw(self, screen):
     """
@@ -30,9 +40,17 @@ class TankAI(Target):
     mx, my = GameData.MANAGER.tank.coord
     dx, dy = mx - self.coord[0], self.coord[1] - my
     new_angle = math.degrees(math.atan2(dy, dx)) - self.angle
+
+    # Flip the image based on angle.
+    new_tank_image = self.tank_image
+    if new_angle < -90 or new_angle > 90:
+      new_tank_image = pg.transform.flip(new_tank_image, False, True)
+
     # Rotate tank by calculated angle.
-    new_tank_image = pg.transform.rotate(self.tank_image, new_angle)
+    new_tank_image = pg.transform.rotate(new_tank_image, new_angle)
+
     # Get the rectangle of the rotated tank.
     new_tank_rectangle = new_tank_image.get_rect(center=self.coord)
+
     # Draw tank.
     screen.blit(new_tank_image, new_tank_rectangle)

@@ -107,9 +107,17 @@ class Tank(GameObject):
     mx, my = pg.mouse.get_pos()
     dx, dy = mx - self.coord[0], self.coord[1] - my
     new_angle = math.degrees(math.atan2(dy, dx)) - self.angle
+
+    # Flip the image based on angle.
+    new_tank_image = self.tank_image
+    if new_angle < -90 or new_angle > 90:
+      new_tank_image = pg.transform.flip(new_tank_image, False, True)
+
     # Rotate tank by calculated angle.
-    new_tank_image = pg.transform.rotate(self.tank_image, new_angle)
+    new_tank_image = pg.transform.rotate(new_tank_image, new_angle)
+
     # Get the rectangle of the rotated tank.
     new_tank_rectangle = new_tank_image.get_rect(center=self.coord)
+
     # Draw tank.
     screen.blit(new_tank_image, new_tank_rectangle)
