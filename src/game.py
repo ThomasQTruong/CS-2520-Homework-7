@@ -26,4 +26,23 @@ if __name__ == "__main__":
 
     pg.display.flip()
 
+  # If game ended because player died.
+  player_quit = False
+  if not GameData.MANAGER.player_alive:
+    font = pg.font.SysFont("dejavusansmono", 50)
+    # Set display to "Game Over!"
+    screen.fill(Color.BLACK)
+    text = font.render("Game Over!", True, Color.RED)
+    text_rectangle = text.get_rect(center = (GameData.SCREEN_SIZE[0] // 2, 
+                                   GameData.SCREEN_SIZE[1] // 2))
+    screen.blit(text, text_rectangle)
+    # Wait till user clicks X.
+    while not player_quit:
+      clock.tick(GameData.FRAME_RATE)
+      events = pg.event.get()
+      for event in events:
+        if event.type == pg.QUIT:
+          player_quit = True
+      pg.display.flip()
+
   pg.quit()

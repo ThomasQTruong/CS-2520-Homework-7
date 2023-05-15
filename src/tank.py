@@ -20,9 +20,12 @@ class Tank(GameObject):
     Constructor method. Sets coordinate, direction,
     minimum and maximum power and color of the tank.
     """
+    self.max_health = 5
+    self.health = self.max_health
     self.coord = coord
     if self.coord is None:  # No coord was passed, set default.
       self.coord = [30, GameData.SCREEN_SIZE[1]//2]
+    self.rad = 30
     self.angle = angle
     self.max_pow = max_pow
     self.min_pow = min_pow
@@ -33,7 +36,8 @@ class Tank(GameObject):
     self.projectile_option = 0
     # Tank image.
     self.tank_image = pg.image.load("../assets/Tank.png")
-    self.tank_image = pg.transform.scale(self.tank_image, (60, 30))
+    self.tank_image = pg.transform.scale(self.tank_image,
+                                         (self.rad * 2, self.rad))
 
   def activate(self):
     """
@@ -81,6 +85,14 @@ class Tank(GameObject):
                                 % len(GameData.PROJECTILES))
     # Change tank color.
     self.color = GameData.PROJECTILE_COLORS[self.projectile_option]
+
+  def check_collision(self, ball):
+    """
+    Checks if the tank got hit by an enemy.
+    """
+    dist = sum([(self.coord[i] - ball.coord[i])**2 for i in range(2)])**0.5
+    min_dist = self.rad + ball.rad
+    return dist <= min_dist
 
   def move_x(self, inc):
     """

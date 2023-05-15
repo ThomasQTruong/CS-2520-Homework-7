@@ -1,6 +1,6 @@
 """Manages the many aspects of the game.
 
-Manages events' handling, ball's motion
+Manages events' handling, projectile's motion
 and collision, target creation, etc.
 """
 
@@ -17,13 +17,16 @@ from target import Target
 
 class Manager:
   """
-  Class that manages events' handling, ball's
+  Class that manages events' handling, projectile's
   motion and collision, target creation, etc.
   """
   def __init__(self, n_targets=1):
-    self.balls = []
+    self.player_alive = True
+    self.projectiles = []
+    self.enemy_projectiles = []
     self.tank = Tank()
     self.targets = []
+    self.enemy_tanks = []
     self.score_t = ScoreTable()
     self.n_targets = n_targets
     self.new_mission()
@@ -32,6 +35,9 @@ class Manager:
     """
     Adds new targets.
     """
+    # Reset player's health.
+    self.tank.health = self.tank.max_health
+
     # Random sizes based on score.
     rand_start = max(1, 30 - 2 * max(0, self.score_t.score()))
     rand_stop = max(1, 30 - max(0, self.score_t.score()))
@@ -48,8 +54,11 @@ class Manager:
                                               randint(rand_start, rand_stop)))
       self.targets.append(Target(rad =
                                  randint(rand_start, rand_stop)))
-      self.targets.append(TankAI(rad =
+      self.enemy_tanks.append(TankAI(rad =
                                  randint(rand_start, rand_stop)))
+    # Add every enemy to the targets list too.
+    for enemy in self.enemy_tanks:
+      self.targets.append(enemy)
 
   def process(self, events, screen):
     """
@@ -61,12 +70,15 @@ class Manager:
     if pg.mouse.get_focused():
       mouse_pos = pg.mouse.get_pos()
       self.tank.set_angle(mouse_pos)
+      for enemy in self.enemy_tanks:
+        enemy.set_angle(self.tank.coord)
 
     self.move()
     self.collide()
     self.draw(screen)
 
-    if len(self.targets) == 0 and len(self.balls) == 0:
+    if (len(self.targets) == 0 and len(self.projectiles) == 0
+        and len(self.enemy_projectiles) == 0):
       self.new_mission()
 
     return done
@@ -77,7 +89,7 @@ class Manager:
     """
     done = False
     for event in events:
-      if event.type == pg.QUIT:
+      if event.type == pg.QUIT or not self.player_alive:
         done = True
       elif event.type == pg.KEYDOWN:
         if event.key == pg.K_e:
@@ -89,8 +101,10 @@ class Manager:
           self.tank.activate()
       elif event.type == pg.MOUSEBUTTONUP:
         if event.button == 1:
-          self.balls.append(self.tank.strike())
+          self.projectiles.append(self.tank.strike())
           self.score_t.b_used += 1
+          for enemy in self.enemy_tanks:
+            self.enemy_projectiles.append(enemy.strike())
 
     # If movement keys are held.
     keys = pg.key.get_pressed()
@@ -107,10 +121,12 @@ class Manager:
 
   def draw(self, screen):
     """
-    Runs balls', tank's, targets' and score table's drawing method.
+    Runs projectiles', tank's, targets' and score table's drawing method.
     """
-    for ball in self.balls:
-      ball.draw(screen)
+    for projectile in self.projectiles:
+      projectile.draw(screen)
+    for projectile in self.enemy_projectiles:
+      projectile.draw(screen)
     for target in self.targets:
       target.draw(screen)
     self.tank.draw(screen)
@@ -118,31 +134,53 @@ class Manager:
 
   def move(self):
     """
-    Runs balls' and tank's movement method, removes dead balls.
+    Runs projectiles' and tank's movement method, removes dead projectiles.
     """
-    dead_balls = []
-    for i, ball in enumerate(self.balls):
-      ball.move(grav=2)
-      if not ball.is_alive:
-        dead_balls.append(i)
-    for i in reversed(dead_balls):
-      self.balls.pop(i)
+    # User's projectiles.
+    dead_projectiles = []
+    for i, projectile in enumerate(self.projectiles):
+      projectile.move(grav=2)
+      if not projectile.is_alive:
+        dead_projectiles.append(i)
+    for i in reversed(dead_projectiles):
+      self.projectiles.pop(i)
+
+    # Enemy projectiles.
+    dead_enemy_projectiles = []
+    for i, projectile in enumerate(self.enemy_projectiles):
+      projectile.move(grav=2)
+      if not projectile.is_alive:
+        dead_enemy_projectiles.append(i)
+    for i in reversed(dead_enemy_projectiles):
+      self.enemy_projectiles.pop(i)
+
+    # Make targets move.
     for i, target in enumerate(self.targets):
       target.move()
     self.tank.gain()
 
   def collide(self):
     """
-    Checks whether balls bump into targets, sets balls' alive trigger.
+    Checks whether projectiles bump into targets,
+    sets projectiles' alive trigger.
     """
     collisions = []
     targets_c = []
-    for i, ball in enumerate(self.balls):
+    for i, projectile in enumerate(self.projectiles):
       for j, target in enumerate(self.targets):
-        if target.check_collision(ball):
+        if target.check_collision(projectile):
           collisions.append([i, j])
           targets_c.append(j)
     targets_c.sort()
     for j in reversed(targets_c):
       self.score_t.t_destr += 1
+      if len(self.enemy_tanks) > 0 and self.targets[j] in self.enemy_tanks:
+        self.enemy_tanks.remove(self.targets[j])
       self.targets.pop(j)
+
+    # Check for player collision with enemy's projectile.
+    for projectile in self.enemy_projectiles:
+      if self.tank.check_collision(projectile):
+        self.tank.health -= 1
+        if self.tank.health <= 0:
+          self.player_alive = False

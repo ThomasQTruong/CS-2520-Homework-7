@@ -1,8 +1,9 @@
 """A tank bot that attacks the user."""
 
 import math
-import game_data as GameData
 import pygame as pg
+import numpy as np
+import game_data as GameData
 from random import randint
 from target import Target
 
@@ -30,6 +31,23 @@ class TankAI(Target):
     if (self.coord[1] < 0) or (self.coord[1] > GameData.SCREEN_SIZE[1]):
       self.vy *= -1
     self.coord[1] += self.vy
+
+  def strike(self):
+    """
+    Creates projectile, according to tank's direction and current charge power.
+    """
+    vel = 50
+    angle = self.angle
+    projectile = GameData.PROJECTILES[0](list(self.coord),
+                    [int(vel * np.cos(angle)), int(vel * np.sin(angle))])
+    return projectile
+
+  def set_angle(self, target_pos):
+    """
+    Sets tank's direction to target position.
+    """
+    self.angle = np.arctan2(target_pos[1] - self.coord[1],
+                            target_pos[0] - self.coord[0])
 
   def draw(self, screen):
     """
