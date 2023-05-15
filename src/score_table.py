@@ -4,6 +4,7 @@ Calculate and displays scores.
 """
 
 import pygame as pg
+import game_data as GameData
 from color import Color
 
 class ScoreTable:
@@ -29,5 +30,7 @@ class ScoreTable:
                                        True, Color.WHITE))
     score_surf.append(self.font.render(f"Total: {self.score()}",
                                        True, Color.RED))
-    for i in range(3):
+    score_surf.append(self.font.render(
+          f"Health: {GameData.MANAGER.tank.health}", True, Color.GREEN))
+    for i in range(len(score_surf)):
       screen.blit(score_surf[i], [10, 10 + 30 * i])

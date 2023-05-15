@@ -10,8 +10,10 @@
     - Fast Triangle Targets.
     - Fast Square Targets.
 3. ✅ Transform the cannon into a moving tank.
+    - ```assets/Tank.png```
 4. ⬜️ Create "bombs" that will be dropped by targets onto the cannon.
-5. ⬜️ Implement multiple cannons that can shoot at each other.
+5. ✅ Implement multiple cannons that can shoot at each other.
+    - TankAIs
 
 # Required Installations
 - Python3
@@ -25,6 +27,7 @@
 
 # Controls
 - [RClick] - Shoot.
+    - Hold to charge power.
 - [W] / [Up Arrow] - Move up.
 - [A] / [Left Arrow] - Move left.
 - [S] / [Down Arrow] - Move down.
