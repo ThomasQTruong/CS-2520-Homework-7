@@ -22,9 +22,11 @@ class Tank(GameObject):
     """
     self.max_health = 100
     self.health = self.max_health
+
     self.coord = coord
     if self.coord is None:  # No coord was passed, set default.
       self.coord = [30, GameData.SCREEN_SIZE[1]//2]
+
     self.rad = 30
     self.angle = angle
     self.max_pow = max_pow
@@ -133,3 +135,8 @@ class Tank(GameObject):
 
     # Draw tank.
     screen.blit(new_tank_image, new_tank_rectangle)
+
+    # Power bar.
+    rectangle = pg.Rect(self.pow, 10, self.pow, 10)
+    rectangle.center = (self.coord[0], self.coord[1] - 20)
+    pg.draw.rect(screen, self.color, rectangle)

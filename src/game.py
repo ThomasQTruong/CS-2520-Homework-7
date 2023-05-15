@@ -18,6 +18,7 @@ if __name__ == "__main__":
 
   GameData.MANAGER = Manager.Manager(n_targets=3)
 
+  # Game not done yet.
   while not done:
     clock.tick(GameData.FRAME_RATE)
     screen.fill(Color.BLACK)
@@ -25,6 +26,7 @@ if __name__ == "__main__":
     done = GameData.MANAGER.process(pg.event.get(), screen)
 
     pg.display.flip()
+
 
   # If game ended because player died.
   player_quit = False

@@ -24,6 +24,7 @@ class ScoreTable:
 
   def draw(self, screen):
     score_surf = []
+    # Create text for the scores being displayed.
     score_surf.append(self.font.render(f"Destroyed: {self.t_destr}",
                                        True, Color.WHITE))
     score_surf.append(self.font.render(f"Shots Fired: {self.b_used}",
@@ -32,5 +33,6 @@ class ScoreTable:
                                        True, Color.RED))
     score_surf.append(self.font.render(
           f"Health: {GameData.MANAGER.tank.health}", True, Color.GREEN))
+    # Draw each text one under another.
     for i in range(len(score_surf)):
       screen.blit(score_surf[i], [10, 10 + 30 * i])

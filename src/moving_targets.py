@@ -18,6 +18,7 @@ class MovingTargets(Target):
     self.vy = randint(-2, +2)
 
   def move(self):
+    """Changes the position of the target."""
     # Out of bounds, move opposite x direction.
     if (self.coord[0] < 0) or (self.coord[0] > GameData.SCREEN_SIZE[0]):
       self.vx *= -1

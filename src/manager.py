@@ -82,6 +82,7 @@ class Manager:
     self.collide()
     self.draw(self.screen)
 
+    # Map is blank, spawn new targets.
     if (len(self.targets) == 0 and len(self.projectiles) == 0
         and len(self.enemy_projectiles) == 0):
       self.new_mission()
@@ -94,16 +95,22 @@ class Manager:
     """
     done = False
     for event in events:
+      # User clicked the X button.
       if event.type == pg.QUIT or not self.player_alive:
         done = True
+      # Key was pressed.
       elif event.type == pg.KEYDOWN:
+        # E key was pressed: next projectile.
         if event.key == pg.K_e:
           self.tank.change_projectile(False)
+        # Q key was pressed: previous projectile.
         elif event.key == pg.K_q:
           self.tank.change_projectile(True)
+      # User clicked.
       elif event.type == pg.MOUSEBUTTONDOWN:
         if event.button == 1:
           self.tank.activate()
+      # User lifted their click.
       elif event.type == pg.MOUSEBUTTONUP:
         if event.button == 1:
           self.projectiles.append(self.tank.strike())

@@ -18,4 +18,5 @@ class Color:
 
   @staticmethod
   def rand_color() -> tuple[int, int, int]:
+    """Generates a random color."""
     return (randint(0, 255), randint(0, 255), randint(0, 255))

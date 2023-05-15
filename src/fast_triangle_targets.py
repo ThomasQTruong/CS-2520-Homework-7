@@ -29,6 +29,7 @@ class FastTriangleTargets(Target):
                     (self.coord[0] + self.rad / 2, self.coord[1])))
 
   def move(self):
+    """Changes the position of the target."""
     # Out of bounds, move opposite x direction.
     if (self.coord[0] < 0) or (self.coord[0] > GameData.SCREEN_SIZE[0]):
       self.vx *= -1
