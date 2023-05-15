@@ -2,18 +2,20 @@
 - By Thomas Truong | Bronco ID: 014426906
 
 # Tasks
-1. ✅ Implement various types of projectiles.
+1. ✅ Refactor the Codebase
+2. ✅ Implement various types of projectiles.
     - Square projectile.
     - Triangle projectile.
-2. ✅ Develop several target types with different movement patterns.
+3. ✅ Develop several target types with different movement patterns.
     - Fast Circle Targets.
     - Fast Triangle Targets.
     - Fast Square Targets.
-3. ✅ Transform the cannon into a moving tank.
-    - ```assets/Tank.png```
-4. ⬜️ Create "bombs" that will be dropped by targets onto the cannon.
-5. ✅ Implement multiple cannons that can shoot at each other.
-    - TankAIs
+4. ✅ Transform the cannon into a moving tank.
+    - ```assets/Tank.png```.
+5. ✅ Create "bombs" that will be dropped by targets onto the cannon.
+    - ```target.py/draw_bomb()```.
+6. ✅ Implement multiple cannons that can shoot at each other.
+    - TankAIs.
 
 # Required Installations
 - Python3

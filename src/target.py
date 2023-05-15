@@ -37,6 +37,10 @@ class Target(GameObject):
     min_dist = self.rad + ball.rad
     return dist <= min_dist
 
+  def drop_bomb(self, screen):
+    """Drops a bomb on its current location."""
+    pg.draw.circle(screen, Color.WHITE, self.coord, self.rad*2)
+
   def draw(self, screen):
     """
     Draws the target on the screen

@@ -20,7 +20,7 @@ class Tank(GameObject):
     Constructor method. Sets coordinate, direction,
     minimum and maximum power and color of the tank.
     """
-    self.max_health = 5
+    self.max_health = 100
     self.health = self.max_health
     self.coord = coord
     if self.coord is None:  # No coord was passed, set default.

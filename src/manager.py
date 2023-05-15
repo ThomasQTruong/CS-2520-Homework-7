@@ -5,6 +5,7 @@ and collision, target creation, etc.
 """
 
 import pygame as pg
+import game_data as GameData
 from random import randint
 from tank import Tank
 from score_table import ScoreTable
@@ -30,13 +31,16 @@ class Manager:
     self.score_t = ScoreTable()
     self.n_targets = n_targets
     self.new_mission()
+    self.screen = None
 
   def new_mission(self):
     """
     Adds new targets.
     """
-    # Reset player's health.
-    self.tank.health = self.tank.max_health
+    # Heals player's health by score.
+    self.tank.health += max(15, self.score_t.score())
+    if self.tank.health > self.tank.max_health:
+      self.tank.health = self.tank.max_health
 
     # Random sizes based on score.
     rand_start = max(1, 30 - 2 * max(0, self.score_t.score()))
@@ -65,6 +69,7 @@ class Manager:
     Runs all necessary method for each iteration.
     Adds new targets, if previous are destroyed.
     """
+    self.screen = screen
     done = self.handle_events(events)
 
     if pg.mouse.get_focused():
@@ -75,7 +80,7 @@ class Manager:
 
     self.move()
     self.collide()
-    self.draw(screen)
+    self.draw(self.screen)
 
     if (len(self.targets) == 0 and len(self.projectiles) == 0
         and len(self.enemy_projectiles) == 0):
@@ -182,5 +187,13 @@ class Manager:
     for projectile in self.enemy_projectiles:
       if self.tank.check_collision(projectile):
         self.tank.health -= 1
+        if self.tank.health <= 0:
+          self.player_alive = False
+
+    # Drop a bomb if collide with target.
+    for target in self.targets:
+      if target.check_collision(self.tank):
+        target.drop_bomb(self.screen)
+        self.tank.health -= 2
         if self.tank.health <= 0:
           self.player_alive = False
