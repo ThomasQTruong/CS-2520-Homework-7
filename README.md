@@ -2,7 +2,8 @@
 - By Thomas Truong | Bronco ID: 014426906
 
 # Tasks
-1. ✅ Refactor the Codebase
+1. ✅ Refactor the Codebase.
+    - Divided code into separate modules that represent it.
 2. ✅ Implement various types of projectiles.
     - Square projectile.
     - Triangle projectile.
