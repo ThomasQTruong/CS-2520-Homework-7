@@ -26,7 +26,7 @@
 # Usage Guide
 - Navigate to ```src\``` folder.
   - Open ```game.py``` with Python.
-    - ![image]()
+    - ![image](https://github.com/ThomasQTruong/CS-2520-Homework-7/assets/58405482/ab6698a7-2d80-4107-896c-097f7e49b12c)
 
 # Controls
 - [RClick] - Shoot.
