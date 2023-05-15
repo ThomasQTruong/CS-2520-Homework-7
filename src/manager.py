@@ -5,7 +5,6 @@ and collision, target creation, etc.
 """
 
 import pygame as pg
-import game_data as GameData
 from random import randint
 from tank import Tank
 from score_table import ScoreTable
