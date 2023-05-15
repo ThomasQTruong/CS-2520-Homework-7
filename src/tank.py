@@ -18,7 +18,7 @@ class Tank(GameObject):
                max_pow=50, min_pow=10, color=Color.RED):
     """
     Constructor method. Sets coordinate, direction,
-    minimum and maximum power and color of the gun.
+    minimum and maximum power and color of the tank.
     """
     self.coord = coord
     if self.coord is None:  # No coord was passed, set default.
@@ -31,26 +31,26 @@ class Tank(GameObject):
     self.pow = min_pow
     # Projectile values.
     self.projectile_option = 0
-    # Tank values.
+    # Tank image.
     self.tank_image = pg.image.load("../assets/Tank.png")
     self.tank_image = pg.transform.scale(self.tank_image, (60, 30))
 
   def activate(self):
     """
-    Activates gun's charge.
+    Activates tank's charge.
     """
     self.active = True
 
   def gain(self, inc=2):
     """
-    Increases current gun charge power.
+    Increases current tank charge power.
     """
     if self.active and self.pow < self.max_pow:
       self.pow += inc
 
   def strike(self):
     """
-    Creates projectile, according to gun's direction and current charge power.
+    Creates projectile, according to tank's direction and current charge power.
     """
     vel = self.pow
     angle = self.angle
@@ -62,7 +62,7 @@ class Tank(GameObject):
 
   def set_angle(self, target_pos):
     """
-    Sets gun's direction to target position.
+    Sets tank's direction to target position.
     """
     self.angle = np.arctan2(target_pos[1] - self.coord[1],
                             target_pos[0] - self.coord[0])
@@ -84,7 +84,7 @@ class Tank(GameObject):
 
   def move_x(self, inc):
     """
-    Changes horizonal position of the gun.
+    Changes horizonal position of the tank.
     """
     if (self.coord[0] > 30 or inc > 0) and (self.coord[0]
                         < GameData.SCREEN_SIZE[0] - 30 or inc < 0):
@@ -92,7 +92,7 @@ class Tank(GameObject):
 
   def move_y(self, inc):
     """
-    Changes vertical position of the gun.
+    Changes vertical position of the tank.
     """
     if (self.coord[1] > 30 or inc > 0) and (self.coord[1]
                         < GameData.SCREEN_SIZE[1] - 30 or inc < 0):
@@ -100,7 +100,7 @@ class Tank(GameObject):
 
   def draw(self, screen):
     """
-    Draws the gun on the screen.
+    Draws the tank on the screen.
     """
     # Credit to: https://gamedev.stackexchange.com/questions/132163/
     # how-can-i-make-the-player-look-to-the-mouse-direction-pygame-2d

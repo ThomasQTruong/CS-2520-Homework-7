@@ -12,6 +12,7 @@ from moving_targets import MovingTargets
 from fast_circle_targets import FastCircleTargets
 from fast_square_targets import FastSquareTargets
 from fast_triangle_targets import FastTriangleTargets
+from tank_ai import TankAI
 from target import Target
 
 class Manager:
@@ -31,7 +32,6 @@ class Manager:
     """
     Adds new targets.
     """
-
     # Random sizes based on score.
     rand_start = max(1, 30 - 2 * max(0, self.score_t.score()))
     rand_stop = max(1, 30 - max(0, self.score_t.score()))
@@ -47,6 +47,8 @@ class Manager:
       self.targets.append(FastTriangleTargets(rad =
                                               randint(rand_start, rand_stop)))
       self.targets.append(Target(rad =
+                                 randint(rand_start, rand_stop)))
+      self.targets.append(TankAI(rad =
                                  randint(rand_start, rand_stop)))
 
   def process(self, events, screen):

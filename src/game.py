@@ -16,13 +16,13 @@ if __name__ == "__main__":
   done = False
   clock = pg.time.Clock()
 
-  mgr = Manager.Manager(n_targets=3)
+  GameData.MANAGER = Manager.Manager(n_targets=3)
 
   while not done:
     clock.tick(GameData.FRAME_RATE)
     screen.fill(Color.BLACK)
 
-    done = mgr.process(pg.event.get(), screen)
+    done = GameData.MANAGER.process(pg.event.get(), screen)
 
     pg.display.flip()
 
