@@ -36,8 +36,10 @@ class Manager:
     """
     Adds new targets.
     """
-    # Heals player's health by score.
-    self.tank.health += max(15, self.score_t.score())
+    # Heals player's health by [15 - 60].
+    heal_amount = min(60, 60 - self.score_t.score())
+    self.tank.health += max(15, heal_amount)
+    # Overhealed, set back to max_hp.
     if self.tank.health > self.tank.max_health:
       self.tank.health = self.tank.max_health
 
