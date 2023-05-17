@@ -37,3 +37,12 @@
 - [D] / [Right Arrow] - Move right.
 - [E] - Next projectile.
 - [Q] - Previous projectile.
+
+# How To Play
+- Kill enemies by shooting them.
+    - Avoid being near enemies since they will drop bombs on you.
+    - There are tanks that will shoot at you when you shoot too.
+- Increase your score by killing more than shooting.
+- A new round will start when there are no targets and projectiles on the map.
+    - You will be healed [15 - 60] health every round based on your score.
+    - You will die if your health hits 0.
